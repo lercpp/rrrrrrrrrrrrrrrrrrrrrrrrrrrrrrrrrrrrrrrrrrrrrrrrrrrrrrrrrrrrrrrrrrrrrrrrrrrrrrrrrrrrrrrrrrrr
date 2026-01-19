@@ -1,9 +1,11 @@
 def sum_of_abs(numbers):
-    sum=0
-    for i in range(len(numbers)):
-        sum+=numbers[i]
-
-    return sum
+    if not numbers:
+        return 0
+    else:
+        sum_abs = 0
+        for number in numbers:
+            sum_abs += abs(number)
+        return sum_abs
 
 print(sum_of_abs([1, -2, 3, -4])) # 10
 print(sum_of_abs([-5])) # 5
@@ -12,9 +14,8 @@ print(sum_of_abs([])) # 0
 def count_positive(numbers):
     count = 0
     for i in range(len(numbers)):
-        if numbers[i] % 2 == 0:
+        if numbers[i] >= 0:
             count += 1
-
     return count
 
 print(count_positive([1, -2, 3, 0, 5])) # 3
@@ -24,9 +25,8 @@ print(count_positive([])) # 0
 def apply_and_collect(lst, func):
     a = []
     for i in range(len(lst)):
-        lst[i] = func()
-        a.append(lst[i])
-
+        a.append(func(lst[i]))
+        
     return a
 
 print(apply_and_collect([1, 2, 3], lambda x: x + 1)) # [2, 3, 4]
@@ -47,15 +47,14 @@ print(keep_non_zero([0, 0])) # []
 
 def all_true(lst, pred):
     for i in range(len(lst)):
-        if lst[i] == pred():
+        if pred(lst[i]):
             return True
         
-    return False
+        else: return False
 
 print(all_true([2, 4, 6], lambda x: x % 2 == 0)) # True
 print(all_true([2, 3, 6], lambda x: x % 2 == 0)) # False
 print(all_true([], lambda x: x > 0)) # True
-
 
 def print_with_index(lst):
     for i in range(len(lst)):
@@ -66,11 +65,10 @@ print_with_index(["a", "b", "c"])
 # 1: b
 # 2: c
 
-
 def count(lst, pred):
     count = 0
     for i in range(len(lst)):
-        if lst[i] == pred():
+        if pred(lst[i]):
             count += 1
     return count
 
@@ -79,4 +77,12 @@ print(count([1, 2, 3], lambda x: x % 2 == 1 or x == 2)) # 2
 print(count([], lambda x: x ** 2 > 100)) # 0
 
 def take_while(lst, pred):
-    #чего...
+    a=[]
+    for i in range(len(lst)):
+        if pred(lst[i]) == True:
+            a.append(lst[i])
+        
+        else: break
+
+print(take_while([1, 2, 3, 0, 4, 5], lambda x: x > 0)) # [1, 2, 3]
+print(take_while([2, 4, 6], lambda x: x % 2 == 0)) # [2, 4, 6]
